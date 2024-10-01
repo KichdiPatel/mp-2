@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import CryptoData from "./components/CryptoData";
+import styled from "styled-components";
+import { useEffect, useState } from "react";
+import { Token } from "./interfaces/Token";
 
-function App() {
-  const [count, setCount] = useState(0)
+const ParentDiv = styled.div`
+  width: 80vw;
+  margin: 50px;
+  font-family: "Bebas Neue", sans-serif;
+
+  h1 {
+    font-size: 6rem;
+    color: #638889;
+  }
+`;
+
+export default function App() {
+  // useState Hook to store Data.
+  const [data, setData] = useState<Token[]>([]);
+
+  // useEffect Hook for error handling and re-rendering.
+  useEffect(() => {
+    async function fetchData(): Promise<void> {
+      const rawData = await fetch(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
+      );
+      const tokens: Token[] = await rawData.json();
+      setData(tokens);
+    }
+    fetchData()
+      .then(() => console.log("Data fetched successfully"))
+      .catch((e: Error) => console.log("There was the error: " + e));
+  }, [data.length]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ParentDiv>
+      <h1>Ayan's Crypto Token Tracker</h1>
+      <CryptoData data={data} />
+    </ParentDiv>
+  );
 }
-
-export default App
