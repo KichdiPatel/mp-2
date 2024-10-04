@@ -1,11 +1,11 @@
-import React from "react";
 import styled from "styled-components";
 import { Token } from "../interfaces/Token";
 
+// Using styled components to design a table that can track all of the crypto data
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin: 2rem 0;
   border: 2px solid black;
 `;
 
@@ -13,7 +13,7 @@ const TableHeader = styled.th`
   background-color: #9dbc98;
   color: white;
   text-align: left;
-  padding: 20px 10px;
+  padding: 0.5rem;
   font-size: 2rem;
 `;
 
@@ -29,10 +29,11 @@ const TableRow = styled.tr`
 `;
 
 const TableData = styled.td`
-  padding: 10px;
+  padding: 0.4rem;
   text-align: left;
 `;
 
+// CryptoData uses props to use the fetched API data to then display the key features for each token
 export default function CryptoData(props: { data: Token[] }) {
   return (
     <Table>

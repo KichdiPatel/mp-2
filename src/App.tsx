@@ -3,15 +3,16 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Token } from "./interfaces/Token";
 
+// using styled components to create tags that can help design the page
 const ParentDiv = styled.div`
   width: 80vw;
-  margin: 50px;
+  margin: 0 auto;
   font-family: "Bebas Neue", sans-serif;
+`;
 
-  h1 {
-    font-size: 6rem;
-    color: #638889;
-  }
+const StyledHeader = styled.h1`
+  font-size: 6rem;
+  color: #638889;
 `;
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
   // useEffect Hook for error handling and re-rendering.
   useEffect(() => {
     async function fetchData(): Promise<void> {
+      // using the coingecko API to fetch the tokens tracked on their platform and related financial information
       const rawData = await fetch(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
       );
@@ -34,7 +36,7 @@ export default function App() {
 
   return (
     <ParentDiv>
-      <h1>Ayan's Crypto Token Tracker</h1>
+      <StyledHeader>Ayan's Crypto Token Tracker</StyledHeader>
       <CryptoData data={data} />
     </ParentDiv>
   );
